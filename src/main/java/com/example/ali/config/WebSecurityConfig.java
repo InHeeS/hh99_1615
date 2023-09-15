@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -71,10 +73,13 @@ public class WebSecurityConfig {
 //        http.exceptionHandling(a-> a.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))); //예외처리
 
 
-        http.formLogin((formLogin) ->
-            formLogin
-                .loginPage("/api/user/login-page").permitAll()
-        );
+//        http.formLogin((formLogin) ->
+//            formLogin
+//                .loginPage("/api/user/login-page").permitAll()
+//        );
+
+        // 폼로그인 비활성화
+        http.formLogin(AbstractHttpConfigurer::disable);
 
         // 필터 관리
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
