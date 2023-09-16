@@ -14,18 +14,34 @@ import java.util.List;
 @SuppressWarnings("checkstyle:Indentation")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user/orders")
+@RequestMapping("/api")
 public class OrderController {
     private final OrderService orderService;
 
-    @GetMapping("/category/{category}")
+    @GetMapping("/user/orders")
     public List<OrderResponseDto> getBoard() {
         return orderService.getAllOrder();
     }
-    @PostMapping("")
+    @PostMapping("/user/orders")
     public OrderResponseDto createBoard(@RequestBody OrderRequestDto requestDto,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return orderService.createOrder(requestDto, userDetails.getUser());
     }
+
+    @GetMapping("/seller/orders")
+    public List<OrderResponseDto> getSellerBoard( @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return orderService.getAllSellerOrder(userDetails.getUser());
+    }
+
+    @PutMapping("/seller/orders")
+    public OrderResponseDto updateOrderShippingStatus(@RequestBody OrderRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return orderService.updateOrderShippingStatus(requestDto,userDetails.getUser());
+    }
+
+
+    //order의 해당 user_id
+
+
 
 }
