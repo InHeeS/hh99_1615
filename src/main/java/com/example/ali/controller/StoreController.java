@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -39,7 +41,7 @@ public class StoreController {
     }
 
     @GetMapping("/stores/{storeId}")
-    public Page<ProductResponseDto> getStoreProducts(@PathVariable Long storeId) {
+    public List<ProductResponseDto> getStoreProducts(@PathVariable Long storeId) {
         return productService.getStoreProducts(storeId);
     }
 

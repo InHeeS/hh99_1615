@@ -20,7 +20,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/")
+    @GetMapping("/{id}")
     public ReviewResponseDto getReview(@PathVariable Long id) {
         return reviewService.getReview(id);
     }
@@ -31,14 +31,14 @@ public class ReviewController {
         return reviewService.createReview(requestDto, userDetails.getUser());
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ReviewResponseDto modifyBoard(@PathVariable Long id,
                                                         @RequestBody ReviewRequestDto requestDto,
                                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return reviewService.updateReview(id, requestDto, userDetails.getUser());
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public StringResponseDto deleteBoard(@PathVariable Long id,
                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return reviewService.deleteReview(id, userDetails.getUser());
