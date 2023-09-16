@@ -4,8 +4,6 @@ import com.example.ali.dto.ProductRequestDto;
 import com.example.ali.dto.ProductResponseDto;
 import com.example.ali.entity.Product;
 import com.example.ali.entity.Store;
-import com.example.ali.entity.User;
-import com.example.ali.entity.UserRoleEnum;
 import com.example.ali.repository.ProductRepository;
 import com.example.ali.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,19 +33,49 @@ public class ProductService {
 
     // 게시물 id로 조회
     public ProductResponseDto getProduct(Long productId) {
-        Product product = productRepository.findById(productId).orElseThrow(
-                () -> new IllegalArgumentException("해당 상품을 찾을 수 없습니다.")
-        );
+        Product product = findProduct(productId);
         return new ProductResponseDto(product);
     }
 
-    public createProduct(ProductRequestDto requestDto) {
-        Store store = storeRepository.findById(requestDto.getStoreId()).orElseThrow(
-                () -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다.")
-        );
-        Product product = new Product(requestDto);
+    public ProductResponseDto createProduct(ProductRequestDto requestDto) {
+        Store store = findStore(requestDto.getStoreId());
+        Product product = new Product(store, requestDto);
         productRepository.save(product);
         return new ProductResponseDto(product);
     }
 
+    // 상품 정보 수정
+    public ProductResponseDto updateProduct(Long productId, ProductRequestDto requestDto) {
+        Product product = findProduct(productId);
+        product.update(requestDto);
+        return new ProductResponseDto(product);
+    }
+
+    public ProductResponseDto deleteProduct(Long productId, ProductRequestDto requestDto) {
+        Product product = findProduct(productId);
+        productRepository.delete(product);
+        return new ProductResponseDto(product);
+    }
+
+
+    public Store findStore(Long storeId) {
+        return storeRepository.findById(storeId).orElseThrow(
+                () -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다.")
+        );
+    }
+
+
+
+    public Product findProduct(Long productId) {
+        return productRepository.findById(productId).orElseThrow(
+                () -> new IllegalArgumentException("해당 상품을 찾을 수 없습니다.")
+        );
+    }
+
+
+    public Page<ProductResponseDto> getStoreProducts(Long storeId) {
+        Store store = findStore(storeId);
+        Page<Product> productList = productRepository.findAllByStore(store);
+        return productList.map(ProductResponseDto::new);
+    }
 }
