@@ -1,5 +1,6 @@
 package com.example.ali.entity;
 
+import com.example.ali.dto.ReviewRequestDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +32,19 @@ public class Review {
 
     private String comment;
     private Integer rating;
+
+    public Review(ReviewRequestDto requestDto, User user, Product product, Orders order) {
+        this.user = user;
+        this.product = product;
+        this.orders = order;
+        this.comment = requestDto.getComment();
+        this.rating = requestDto.getRating();
+    }
+
+    public void update(ReviewRequestDto requestDto) {
+        this.comment = requestDto.getComment();
+        this.rating = requestDto.getRating();
+    }
 
     // getters and setters
 }

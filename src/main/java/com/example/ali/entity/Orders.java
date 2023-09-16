@@ -1,5 +1,6 @@
 package com.example.ali.entity;
 
+import com.example.ali.dto.OrderRequestDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,6 +35,12 @@ public class Orders {
 
     @Enumerated(value = EnumType.STRING)
     private ShippingStatus shippingStatus;
+
+    public Orders(User user, Product product) {
+        this.user = user;
+        this.product = product;
+        this.shippingStatus = ShippingStatus.a;
+    }
 
 
     // getters and setters
