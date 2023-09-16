@@ -8,6 +8,7 @@ import com.example.ali.security.UserDetailsImpl;
 import com.example.ali.service.ProductService;
 import com.example.ali.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,11 @@ public class StoreController {
         return storeService.deleteStore(requestDto,  userDetails.getUser());
     }
 
-    // 스토어 상품 리스트 조회
-    @GetMapping("/stores/products")
+    @GetMapping("/stores/{storeId}")
+    public Page<ProductResponseDto> getStoreProducts(@PathVariable Long storeId) {
+        return productService.getStoreProducts(storeId);
+    }
+
 
     // 상품 정보 등록
     @PostMapping("/stores/products")
@@ -48,14 +52,18 @@ public class StoreController {
 
     // 상품 정보 수정
     @PutMapping("/stores/products/{productId}")
-    public ProductResponseDto updateProduct(@RequestBody ProductRequestDto requestDto) {
-        return productService.updateProduct(requestDto);
+    public ProductResponseDto updateProduct(
+            @PathVariable Long productId,
+            @RequestBody ProductRequestDto requestDto) {
+        return productService.updateProduct(productId, requestDto);
     }
 
     // 상품 정보 삭제
     @DeleteMapping("/stores/products/{productId}")
-    public ProductResponseDto deleteProduct(@RequestBody ProductRequestDto requestDto) {
-        return productService.deleteProduct(requestDto);
+    public ProductResponseDto deleteProduct(
+            @PathVariable Long productId,
+            @RequestBody ProductRequestDto requestDto) {
+        return productService.deleteProduct(productId, requestDto);
     }
 
 

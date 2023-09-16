@@ -32,7 +32,8 @@ public class Product {
     @Enumerated(value = EnumType.STRING)
     private ProductStatus productStatus;
 
-    public Product(ProductRequestDto requestDto) {
+    public Product(Store store, ProductRequestDto requestDto) {
+        this.store = store;
         this.productTitle = requestDto.getProductTitle();
         this.info = requestDto.getInfo();
         this.price = requestDto.getPrice();
@@ -42,4 +43,12 @@ public class Product {
     }
 
     // getters and setters
+    public void update(ProductRequestDto requestDto) {
+        this.productTitle = requestDto.getProductTitle();
+        this.info = requestDto.getInfo();
+        this.price = requestDto.getPrice();
+        this.productImage = requestDto.getProductImage();
+        this.productLink = requestDto.getProductLink();
+        this.productStatus = getProductStatus();
+    }
 }
