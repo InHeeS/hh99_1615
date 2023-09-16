@@ -5,7 +5,7 @@ import com.example.ali.entity.ProductStatus;
 import com.example.ali.entity.Store;
 
 public class ProductResponseDto {
-    private Long id;
+    private Long productId;
     private String productTitle;
     private Store store;
     private String info;

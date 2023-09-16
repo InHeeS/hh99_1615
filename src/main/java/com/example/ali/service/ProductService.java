@@ -60,7 +60,15 @@ public class ProductService {
         return new ProductResponseDto(product);
     }
 
+    // 해당 store 모든 정보가져오기
+    public List<ProductResponseDto> getStoreProducts(Long storeId) {
+        Store store = findStore(storeId);
+        List<Product> productList = productRepository.findAllByStore(store);
+        return productList.stream().map(ProductResponseDto::new).toList();
+    }
 
+
+    // store 정보 조회
     public Store findStore(Long storeId) {
         return storeRepository.findById(storeId).orElseThrow(
             () -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다.")

@@ -39,9 +39,10 @@ public class StoreController {
         return productService.getStoreProducts(storeId);
     }
 
-    @GetMapping("/stores/{storeId}")
-    public List<ProductResponseDto> getStoreProducts(@PathVariable Long storeId) {
-        return productService.getStoreProducts(storeId);
+    @DeleteMapping("/seller/store")
+    public StoreResponseDto deleteStore(
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return storeService.deleteStore(userDetails.getUser());
     }
 
 

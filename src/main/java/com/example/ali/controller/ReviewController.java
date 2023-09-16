@@ -32,7 +32,7 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public ReviewResponseDto modifyBoard(@PathVariable Long id,
+    public ReviewResponseDto updateReview(@PathVariable Long id,
                                                         @RequestBody ReviewRequestDto requestDto,
                                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return reviewService.updateReview(id, requestDto, userDetails.getUser());

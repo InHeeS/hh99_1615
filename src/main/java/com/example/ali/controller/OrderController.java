@@ -29,7 +29,7 @@ public class OrderController {
     }
 
     @GetMapping("/seller/orders")
-    public List<OrderResponseDto> getSellerBoard( @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public List<OrderResponseDto> getAllSellerOrder( @AuthenticationPrincipal UserDetailsImpl userDetails){
         return orderService.getAllSellerOrder(userDetails.getUser());
     }
 
