@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends JpaRepository<Orders, Long> {
 
-   List<Orders> findAllByUserId(Long userId);
+   List<Orders> findAllByUser_UserId(Long userId);
 
-    Orders findByProductIdAndUserId(Long productId, Long storeId);
+    Orders findByProduct_ProductIdAndUser_UserId(Long productId, Long storeId);
+
 }

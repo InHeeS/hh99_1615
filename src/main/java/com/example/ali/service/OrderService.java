@@ -48,14 +48,14 @@ public class OrderService {
 
     public List<OrderResponseDto> getAllSellerOrder(User user) {
         // 해당 스토어 아이디인 user_id
-        return orderRepository.findAllByUserId(user.getUserId()).stream().map(OrderResponseDto::new).toList();
+        return orderRepository.findAllByUser_UserId(user.getUserId()).stream().map(OrderResponseDto::new).toList();
     }
 
     @Transactional
     public OrderResponseDto updateOrderShippingStatus(OrderRequestDto requestDto, User user) {
 
         Long storeId = user.getUserId();
-        Orders order = orderRepository.findByProductIdAndUserId(requestDto.getProductId(), storeId);
+        Orders order = orderRepository.findByProduct_ProductIdAndUser_UserId(requestDto.getProductId(), storeId);
 
         ShippingStatus shippingStatus = order.getShippingStatus();
         if(shippingStatus.equals(ShippingStatus.a))

@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -73,9 +75,9 @@ public class ProductService {
     }
 
 
-    public Page<ProductResponseDto> getStoreProducts(Long storeId) {
+    public List<ProductResponseDto> getStoreProducts(Long storeId) {
         Store store = findStore(storeId);
-        Page<Product> productList = productRepository.findAllByStore(store);
-        return productList.map(ProductResponseDto::new);
+        List<Product> productList = productRepository.findAllByStore(store);
+        return productList.stream().map(ProductResponseDto::new).toList();
     }
 }
