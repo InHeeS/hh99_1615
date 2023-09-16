@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Orders {
+public class Orders extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
@@ -29,17 +29,13 @@ public class Orders {
     @JoinColumn(name = "productId")
     private Product product;
 
-
-    private LocalDateTime orderDate;
-//    private java.sql.Date orderDate;
-
     @Enumerated(value = EnumType.STRING)
     private ShippingStatus shippingStatus;
 
     public Orders(User user, Product product) {
         this.user = user;
         this.product = product;
-        this.shippingStatus = ShippingStatus.a;
+        this.shippingStatus = ShippingStatus.DELIVERING;
     }
 
 

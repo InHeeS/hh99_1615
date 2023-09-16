@@ -34,15 +34,15 @@ public class StoreController {
         return storeService.updateStore(requestDto,  userDetails.getUser());
     }
 
-    @DeleteMapping("/seller/store")
-    public StoreResponseDto deleteStore(@RequestBody StoreRequestDto requestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return storeService.deleteStore(requestDto,  userDetails.getUser());
-    }
-
     @GetMapping("/stores/{storeId}")
     public List<ProductResponseDto> getStoreProducts(@PathVariable Long storeId) {
         return productService.getStoreProducts(storeId);
+    }
+
+    @DeleteMapping("/seller/store")
+    public StoreResponseDto deleteStore(
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return storeService.deleteStore(userDetails.getUser());
     }
 
 

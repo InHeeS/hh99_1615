@@ -32,14 +32,14 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public ReviewResponseDto modifyBoard(@PathVariable Long id,
+    public ReviewResponseDto updateReview(@PathVariable Long id,
                                                         @RequestBody ReviewRequestDto requestDto,
                                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return reviewService.updateReview(id, requestDto, userDetails.getUser());
     }
 
     @DeleteMapping("/{id}")
-    public StringResponseDto deleteBoard(@PathVariable Long id,
+    public StringResponseDto deleteReview(@PathVariable Long id,
                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return reviewService.deleteReview(id, userDetails.getUser());
     }

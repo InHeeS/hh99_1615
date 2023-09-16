@@ -8,12 +8,10 @@ import com.example.ali.entity.ShippingStatus;
 import com.example.ali.entity.User;
 import com.example.ali.repository.OrderRepository;
 import com.example.ali.repository.ProductRepository;
-import com.example.ali.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @SuppressWarnings("checkstyle:Indentation")
 @Service
@@ -22,9 +20,11 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+
     public List<OrderResponseDto> getAllOrder() {
         return orderRepository.findAll().stream().map(OrderResponseDto::new).toList();
     }
+
     @Transactional
     public OrderResponseDto createOrder(OrderRequestDto requestDto, User user) {
 
@@ -58,10 +58,10 @@ public class OrderService {
         Orders order = orderRepository.findByProduct_ProductIdAndUser_UserId(requestDto.getProductId(), storeId);
 
         ShippingStatus shippingStatus = order.getShippingStatus();
-        if(shippingStatus.equals(ShippingStatus.a))
-            shippingStatus = ShippingStatus.b;
+        if(shippingStatus.equals(ShippingStatus.DELIVERING))
+            shippingStatus = ShippingStatus.DELIVERED;
         else
-            shippingStatus = ShippingStatus.a;
+            shippingStatus = ShippingStatus.DELIVERING;
 
         return new OrderResponseDto(order);
     }

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
 
-    Optional<Store> findBySellerName(String sellerName);
+    Optional<Store> findByUser_UserId(Long id);
 }
