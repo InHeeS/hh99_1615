@@ -4,6 +4,7 @@ import com.example.ali.dto.OrderRequestDto;
 import com.example.ali.dto.OrderResponseDto;
 import com.example.ali.entity.Orders;
 import com.example.ali.entity.Product;
+import com.example.ali.entity.ShippingStatus;
 import com.example.ali.entity.User;
 import com.example.ali.repository.OrderRepository;
 import com.example.ali.repository.ProductRepository;
@@ -41,6 +42,26 @@ public class OrderService {
         //Order 생성, DB 저장
         Orders order = new Orders(user, product);
         orderRepository.save(order);
+
+        return new OrderResponseDto(order);
+    }
+
+    public List<OrderResponseDto> getAllSellerOrder(User user) {
+        // 해당 스토어 아이디인 user_id
+        return orderRepository.findAllByUserId(user.getUserId()).stream().map(OrderResponseDto::new).toList();
+    }
+
+    @Transactional
+    public OrderResponseDto updateOrderShippingStatus(OrderRequestDto requestDto, User user) {
+
+        Long storeId = user.getUserId();
+        Orders order = orderRepository.findByProductIdAndUserId(requestDto.getProductId(), storeId);
+
+        ShippingStatus shippingStatus = order.getShippingStatus();
+        if(shippingStatus.equals(ShippingStatus.a))
+            shippingStatus = ShippingStatus.b;
+        else
+            shippingStatus = ShippingStatus.a;
 
         return new OrderResponseDto(order);
     }
