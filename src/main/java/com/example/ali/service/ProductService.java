@@ -41,7 +41,7 @@ public class ProductService {
         return new ProductResponseDto(product);
     }
 
-    public createProduct(ProductRequestDto requestDto) {
+    public ProductResponseDto createProduct(ProductRequestDto requestDto) {
         Store store = storeRepository.findById(requestDto.getStoreId()).orElseThrow(
                 () -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다.")
         );
