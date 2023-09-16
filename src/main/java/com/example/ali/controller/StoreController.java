@@ -29,13 +29,13 @@ public class StoreController {
     @PutMapping("/seller/store")
     public StoreResponseDto updateStore(@RequestBody StoreRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return storeService.updateStore(requestDto);
+        return storeService.updateStore(requestDto,  userDetails.getUser());
     }
 
     @DeleteMapping("/seller/store")
     public StoreResponseDto deleteStore(@RequestBody StoreRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return storeService.deleteStore(requestDto);
+        return storeService.deleteStore(requestDto,  userDetails.getUser());
     }
 
 
