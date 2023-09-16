@@ -29,12 +29,4 @@ public class ProductController {
         return productService.getProduct(productId);
     }
 
-
-    // 셀러_상품정보 조회
-    // 셀러_상품정보 등록
-    // 셀러_상품정보 수정
-    // 셀러_상품정보 삭제
-
-
-
 }

@@ -1,10 +1,13 @@
 package com.example.ali.service;
 
+import com.example.ali.dto.ProductRequestDto;
 import com.example.ali.dto.ProductResponseDto;
 import com.example.ali.entity.Product;
+import com.example.ali.entity.Store;
 import com.example.ali.entity.User;
 import com.example.ali.entity.UserRoleEnum;
 import com.example.ali.repository.ProductRepository;
+import com.example.ali.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final StoreRepository storeRepository;
 
     // 전체 조회
     @Transactional(readOnly = true)
@@ -37,5 +41,13 @@ public class ProductService {
         return new ProductResponseDto(product);
     }
 
+    public createProduct(ProductRequestDto requestDto) {
+        Store store = storeRepository.findById(requestDto.getStoreId()).orElseThrow(
+                () -> new IllegalArgumentException("해당 상점을 찾을 수 없습니다.")
+        );
+        Product product = new Product(requestDto);
+        productRepository.save(product);
+        return new ProductResponseDto(product);
+    }
 
 }
