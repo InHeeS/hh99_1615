@@ -1,11 +1,7 @@
 package com.example.ali.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.example.ali.service.ProductService;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +19,10 @@ public class Product {
 
     private String info;
     private Double price;
+
+    // 현재 판매상태 (판매중, 품절, 판매중지)
+    @Enumerated(value = EnumType.STRING)
+    private ProductStatus productStatus;
 
     // getters and setters
 }

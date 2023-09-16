@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("checkstyle:Indentation")
 @Entity
 @Getter
 @NoArgsConstructor
@@ -19,6 +20,10 @@ public class User {
     private String email;
     private Double point;
     private UserRoleEnum role;
+
+    public void changePoint(Double price) {
+        this.point -= price;
+    }
 
 
     // getters and setters
