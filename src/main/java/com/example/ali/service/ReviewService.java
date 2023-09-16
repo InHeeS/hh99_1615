@@ -30,10 +30,10 @@ public class ReviewService {
 
     public ReviewResponseDto createReview(ReviewRequestDto requestDto, User user) {
         Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(()->
-                new IllegalArgumentException()
+                new IllegalArgumentException("error")
         );
         Orders order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(()->
-                new IllegalArgumentException()
+                new IllegalArgumentException("error")
         );
         Review review = new Review(requestDto, user, product, order);
 
@@ -64,7 +64,7 @@ public class ReviewService {
 
     private Review findReviewById(Long id) {
         return reviewRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException()
+                new IllegalArgumentException("error")
         );
     }
 }

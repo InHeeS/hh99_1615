@@ -15,7 +15,7 @@ public class ProductResponseDto {
     private ProductStatus productStatus;
 
     public ProductResponseDto(Product product) {
-        this.id = product.getProductId();
+        this.productId = product.getProductId();
         this.productTitle = product.getProductTitle();
         this.store = product.getStore();
         this.info = product.getInfo();

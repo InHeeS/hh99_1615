@@ -19,11 +19,11 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/user/orders")
-    public List<OrderResponseDto> getBoard() {
+    public List<OrderResponseDto> getAllOrder() {
         return orderService.getAllOrder();
     }
     @PostMapping("/user/orders")
-    public OrderResponseDto createBoard(@RequestBody OrderRequestDto requestDto,
+    public OrderResponseDto createOrder(@RequestBody OrderRequestDto requestDto,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return orderService.createOrder(requestDto, userDetails.getUser());
     }
@@ -38,10 +38,5 @@ public class OrderController {
         @AuthenticationPrincipal UserDetailsImpl userDetails){
         return orderService.updateOrderShippingStatus(requestDto,userDetails.getUser());
     }
-
-
-    //order의 해당 user_id
-
-
 
 }

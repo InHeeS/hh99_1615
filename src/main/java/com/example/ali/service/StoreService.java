@@ -19,7 +19,6 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
 
-    @Transactional(readOnly = true)
     public StoreResponseDto createStore(StoreRequestDto requestDto, User user) {
 
         //RequestDto -> Entity
@@ -34,17 +33,19 @@ public class StoreService {
     public StoreResponseDto updateStore(StoreRequestDto requestDto, User user) {
 
         // Store 안의 해당 User의 user_id 값으로 store 가져오기
-
-        Store store = storeRepository.findBySellerName(requestDto.getSellerName()).orElseThrow(() ->
+        Long id = user.getUserId();
+        Store store = storeRepository.findByUser_UserId(id).orElseThrow(() ->
             new IllegalArgumentException("등록된 Store 가 없습니다."));
 
         store.update(requestDto);
 
         return new StoreResponseDto(store);
     }
-    @Transactional(readOnly = true)
-    public StoreResponseDto deleteStore(StoreRequestDto requestDto, User user) {
-        Store store = storeRepository.findBySellerName(requestDto.getSellerName()).orElseThrow(() ->
+
+    public StoreResponseDto deleteStore(User user) {
+
+        Long id = user.getUserId();
+        Store store = storeRepository.findByUser_UserId(id).orElseThrow(() ->
             new IllegalArgumentException("등록된 Store 가 없습니다."));
 
         storeRepository.delete(store);

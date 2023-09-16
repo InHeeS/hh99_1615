@@ -72,8 +72,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             String username = info.getSubject();
             String authority = info.get("auth", String.class);
             UserRoleEnum role;
-            if (authority.equals("ADMIN")) {
-                role = UserRoleEnum.ADMIN;
+            if (authority.equals("SELLER")) {
+                role = UserRoleEnum.SELLER;
             } else {
                 role = UserRoleEnum.USER;
             }

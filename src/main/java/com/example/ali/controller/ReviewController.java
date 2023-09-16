@@ -39,7 +39,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{id}")
-    public StringResponseDto deleteBoard(@PathVariable Long id,
+    public StringResponseDto deleteReview(@PathVariable Long id,
                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return reviewService.deleteReview(id, userDetails.getUser());
     }
