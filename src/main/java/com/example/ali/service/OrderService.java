@@ -58,10 +58,10 @@ public class OrderService {
         Orders order = orderRepository.findByProduct_ProductIdAndUser_UserId(requestDto.getProductId(), storeId);
 
         ShippingStatus shippingStatus = order.getShippingStatus();
-        if(shippingStatus.equals(ShippingStatus.a))
-            shippingStatus = ShippingStatus.b;
+        if(shippingStatus.equals(ShippingStatus.DELIVERING))
+            shippingStatus = ShippingStatus.DELIVERED;
         else
-            shippingStatus = ShippingStatus.a;
+            shippingStatus = ShippingStatus.DELIVERING;
 
         return new OrderResponseDto(order);
     }
