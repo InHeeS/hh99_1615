@@ -6,10 +6,11 @@ import lombok.Getter;
 public enum ProductStatus {
     // 판매중
     AVAILABLE,
-
     // 일시품절
     OUT_OF_STOCK,
-
     // 품절
-    DISCONTINUED
+    DISCONTINUED;
+
+    ProductStatus() {
+    }
 }
