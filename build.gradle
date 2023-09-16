@@ -53,6 +53,12 @@ dependencies {
 
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // 웹소켓
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // jsonparser
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 tasks.named('test') {
