@@ -211,6 +211,23 @@
     background-color: #e0e0e0;
 }
 
+.store-management-content form textarea {
+    width: 95%; /* 너비를 95%로 설정 */
+    height: 100px; /* 높이를 100px로 설정 */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.store-management-content form input {
+    width: 95%; /* 너비를 95%로 조절 */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
 /* Modal Styles */
 .modal {
     display: none;
@@ -225,6 +242,8 @@
     padding-top: 60px;
 }
 
+
+
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto;
@@ -232,6 +251,12 @@
     border: 1px solid #888;
     width: 80%;
 }
+
+.modal-btn-set {
+    display: flex;
+}
+
+
 
 .close {
     color: #aaa;

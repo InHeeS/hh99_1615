@@ -87,7 +87,7 @@
           </select>
         </div>
 
-        <div>
+        <div class="modal-btn-set">
           <button type="button" id="addButton" onclick="addProduct()">Add Product</button>
           <button type="button" id="updateButton" onclick="updateProduct()">Update Product</button>
           <button type="button" id="deleteButton" onclick="deleteProduct()">Delete Product</button>
@@ -194,7 +194,7 @@
 
   function loadProductList() {
     $.ajax({
-      url: '/api/products', // TODO : 해당 스토어 정보만 보이게 수정 필요
+      url: '{sdfkasf}/api/products', // TODO : 해당 스토어 정보만 보이게 수정 필요
       type: 'GET',
       success: function(response) {
         var productList = $('#productList tbody');
