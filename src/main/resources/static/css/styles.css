@@ -1,0 +1,248 @@
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ccc;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Ensure the header is above other elements */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.header .home {
+    text-decoration: none; /* Remove underline from the link */
+    color: black;
+    font-size: 24px; /* Increase font size for better visibility */
+}
+
+.header .login {
+    padding: 10px 20px;
+    background-color: #007bff; /* Background color for the box */
+    color: white;
+    border-radius: 5px; /* Rounded corners for the box */
+    text-decoration: none; /* Remove underline from the link */
+    white-space: nowrap; /* Prevent the text inside the button from wrapping */
+    overflow: hidden; /* Hide the overflow content */
+    text-overflow: ellipsis; /* Display ellipsis when the text overflows */
+    max-width: 150px; /* Set a maximum width for the button */
+}
+
+/* Aside Styles */
+.aside {
+    width: 200px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: calc(100% - 60px); /* Adjusted height to account for the header */
+    top: 60px; /* Adjusted top position to be below the header */
+    left: 0;
+    overflow-y: auto; /* Add scroll if content is longer than the viewport */
+}
+
+.aside .section {
+    margin-bottom: 20px;
+}
+
+.aside .section h2 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.aside .section h2 a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.aside .section h2 a:hover {
+    background-color: #e0e0e0;
+}
+
+/* Product List Styles */
+.product-list {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.product-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-list table th, .product-list table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.product-list .paging {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.product-list .paging a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #000;
+}
+
+/* Order List Styles */
+.order-list-container {
+    margin: 80px 20px 20px 220px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-list-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.order-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-list-table th, .order-list-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.order-list-table th {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.order-list-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.order-list-table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Store Management Styles */
+.store-management-content {
+    margin: 80px 20px 20px 220px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.store-management-content h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.store-management-content form {
+    margin-bottom: 20px;
+}
+
+.store-management-content form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.store-management-content form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.store-management-content form button {
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.store-management-content form button:hover {
+    background-color: #0056b3;
+}
+
+.store-management-content #productList {
+    margin-top: 20px;
+}
+
+.store-management-content #productList table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.store-management-content #productList table th,
+.store-management-content #productList table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.store-management-content #productList table th {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.store-management-content #productList table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.store-management-content #productList table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

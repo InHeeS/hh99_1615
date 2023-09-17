@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Order List</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<div style="display: flex;">
+  <!-- Aside Section -->
+  <div th:replace="aside :: aside"></div>
+  <div th:fragment="orders-list">
+<div class="order-list">
+  <h1>주문 목록</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>주문 번호</th>
+      <th>상품 이름</th>
+      <th>수량</th>
+      <th>가격</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="orders : ${ordersList}">
+      <td th:text="${order.id}">주문 번호</td>
+      <td th:text="${order.productName}">상품 이름</td>
+      <td th:text="${order.price}">가격</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</body>
+</html>

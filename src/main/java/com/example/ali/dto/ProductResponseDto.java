@@ -3,7 +3,9 @@ package com.example.ali.dto;
 import com.example.ali.entity.Product;
 import com.example.ali.entity.ProductStatus;
 import com.example.ali.entity.Store;
+import lombok.Getter;
 
+@Getter
 public class ProductResponseDto {
     private Long productId;
     private String productTitle;
