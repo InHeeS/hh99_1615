@@ -42,6 +42,7 @@ public class Product {
         this.productStatus = getProductStatus();
     }
 
+
     // getters and setters
     public void update(ProductRequestDto requestDto, ProductStatus productStatus) {
         this.productTitle = requestDto.getProductTitle();

@@ -3,6 +3,7 @@ package com.example.ali.service;
 import com.example.ali.dto.ProductRequestDto;
 import com.example.ali.dto.ProductResponseDto;
 import com.example.ali.entity.Product;
+import com.example.ali.entity.ProductStatus;
 import com.example.ali.entity.Store;
 import com.example.ali.repository.ProductRepository;
 import com.example.ali.repository.StoreRepository;
@@ -41,7 +42,9 @@ public class ProductService {
 
     // 상품 생성
     public ProductResponseDto createProduct(ProductRequestDto requestDto) {
+
         Store store = findStore(requestDto.getStoreId());
+
         Product product = new Product(store, requestDto);
         productRepository.save(product);
         return new ProductResponseDto(product);
@@ -51,7 +54,14 @@ public class ProductService {
     @Transactional
     public ProductResponseDto updateProduct(Long productId, ProductRequestDto requestDto) {
         Product product = findProduct(productId);
-        product.update(requestDto);
+
+        ProductStatus productStatus = null;
+        if(requestDto.getProductStatus().equals("AVAILABLE")){
+            productStatus = ProductStatus.AVAILABLE;
+        }else
+            productStatus = ProductStatus.DISCONTINUED;
+
+        product.update(requestDto, productStatus);
         return new ProductResponseDto(product);
     }
     // 상품 정보 삭제

@@ -19,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private ReviewRepository reviewRepository;
-    private ProductRepository productRepository;
-    private OrderRepository orderRepository;
+    private final ReviewRepository reviewRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     public ReviewResponseDto getReview(Long id) {
         Review review = findReviewById(id);
