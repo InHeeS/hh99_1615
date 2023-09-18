@@ -24,15 +24,20 @@ public class OrderService {
     private final StoreRepository storeRepository;
 
     public List<OrderResponseDto> getAllOrder(User user) {
-        return orderRepository.findAll().stream().map(OrderResponseDto::new).toList();
-//        if (user.getRole().equals(UserRoleEnum.USER)) {
-//            return orderRepository.findAllByUser_UserId(user.getUserId()).stream().map(OrderResponseDto::new).toList();
-//        } else {
-//            Store store = storeRepository.findByUser_UserId(user.getUserId()).orElseThrow(() ->
-//                    new IllegalArgumentException("store 없음")
-//            );
-//            보류
-//        }
+
+        if (user.getRole().equals(UserRoleEnum.USER)) {
+            return orderRepository.findAllByUser_UserId(user.getUserId()).stream()
+                .map(OrderResponseDto::new)
+                .toList();
+        }
+            Store store = storeRepository.findByUser_UserId(user.getUserId())
+                    .orElseThrow(() -> new IllegalArgumentException("잘못된 정보")); // 여기서 한번
+
+            List<Product> products = productRepository.findAllByStore(store); // 여기서 한번
+
+            return orderRepository.findAllByProductIn(products).stream()// 여기서 한번
+                    .map(OrderResponseDto::new)
+                    .toList();
     }
 
     @Transactional
@@ -62,25 +67,24 @@ public class OrderService {
         return new OrderResponseDto(order);
     }
 
-    public List<OrderResponseDto> getAllSellerOrder(User user) {
-        // 해당 스토어 아이디인 user_id
-        return orderRepository.findAllByUser_UserId(user.getUserId()).stream().map(OrderResponseDto::new).toList();
-    }
-
     @Transactional
     public OrderResponseDto updateOrderShippingStatus(Long orderId, User user) {
-
-        //user가 seller가 아닌 것을 확인
+        // Role 권한 확인
         if (!user.getRole().equals(UserRoleEnum.SELLER)) {
             throw new IllegalArgumentException("seller만 배송상태 수정 가능");
         }
+        // 주문 있없?
         Orders order = orderRepository.findById(orderId).orElseThrow(() ->
                 new IllegalArgumentException("해당 주문이 없습니다.")
         );
+        // 니가 이 물건의 주인이냐
+        if (!order.getProduct().getStore().getUser().equals(user)) {
+            // 쿼리 튜닝 필요
+            throw new IllegalArgumentException("수정 권한이 없습니다");
+        }
         if (order.getShippingStatus().equals(ShippingStatus.DELIVERING)) {
             order.changeStatus();
         }
-
         return new OrderResponseDto(order);
     }
 }

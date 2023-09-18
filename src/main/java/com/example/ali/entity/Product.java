@@ -16,7 +16,7 @@ public class Product {
 
     private String productTitle;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storeId")
     private Store store;
 
