@@ -48,13 +48,14 @@ public class ProductService {
     }
 
     // 상품 정보 수정
+    @Transactional
     public ProductResponseDto updateProduct(Long productId, ProductRequestDto requestDto) {
         Product product = findProduct(productId);
         product.update(requestDto);
         return new ProductResponseDto(product);
     }
     // 상품 정보 삭제
-    public ProductResponseDto deleteProduct(Long productId, ProductRequestDto requestDto) {
+    public ProductResponseDto deleteProduct(Long productId) {
         Product product = findProduct(productId);
         productRepository.delete(product);
         return new ProductResponseDto(product);
