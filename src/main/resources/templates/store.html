@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Store Management</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<div style="display: flex;">
+  <!-- Aside Section -->
+  <div th:replace="aside :: aside"></div>
+
+<div class="seller-management-content"
+     style="
+     height: 600px;
+     width: 800px;
+     "
+>
+  <h1>Store Management</h1>
+
+  <form id="storeForm">
+    <div class="form-group">
+      <div>
+        <label for="storeName">Store Name:</label>
+      </div>
+      <div>
+        <input type="text" id="storeName" name="storeName">
+      </div>
+    </div>
+    <div class="form-group1">
+      <div>
+        <label for="storeInfo">Store Info:</label>
+      </div>
+      <div>
+        <textarea id="storeInfo" name="storeInfo"></textarea>
+      </div>
+    </div>
+    <div class="button-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-primary" onclick="createStore()">Create Store</button>
+      <button type="button" class="btn btn-primary" onclick="updateStore()">Update Store</button>
+      <button type="button" class="btn btn-primary" onclick="deleteStore()">Delete Store</button>
+    </div>
+  </form>
+
+  <!-- Store Details -->
+  <div id="storeDetails">
+    <!-- Store details will be displayed here -->
+  </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/storeManagement.js"></script>
+</body>
+<script>
+  function createStore() {
+    var storeData = {
+      storeName: $('#storeName').val(),
+      storeInfo: $('#storeInfo').val()
+    };
+    $.ajax({
+      url: '/seller/store',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(storeData),
+      success: function(response) {
+        alert('Store created successfully');
+        // Update the store details section with the new store data
+        updateStoreDetails(response);
+      },
+      error: function(error) {
+        alert('Failed to create store');
+      }
+    });
+  }
+
+  function updateStore() {
+    var storeData = {
+      storeName: $('#storeName').val(),
+      storeInfo: $('#storeInfo').val()
+    };
+    $.ajax({
+      url: '/seller/store',
+      type: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(storeData),
+      success: function(response) {
+        alert('Store updated successfully');
+        // Update the store details section with the updated store data
+        updateStoreDetails(response);
+      },
+      error: function(error) {
+        alert('Failed to update store');
+      }
+    });
+  }
+
+  function deleteStore() {
+    $.ajax({
+      url: '/seller/store',
+      type: 'DELETE',
+      success: function(response) {
+        alert('Store deleted successfully');
+        // Clear the store details section
+        $('#storeDetails').empty();
+      },
+      error: function(error) {
+        alert('Failed to delete store');
+      }
+    });
+  }
+
+  function updateStoreDetails(response) {
+    var storeDetails = $('#storeDetails');
+    storeDetails.empty();
+    storeDetails.append('<p>Store Name: ' + response.storeName + '</p>');
+    storeDetails.append('<p>Store Info: ' + response.storeInfo + '</p>');
+  }
+
+  // Load the store details when the page loads
+  $(document).ready(function() {
+    // TODO: Add logic to load store details on page load
+  });
+</script>
+</html>

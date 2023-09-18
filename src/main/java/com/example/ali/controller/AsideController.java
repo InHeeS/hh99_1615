@@ -22,11 +22,11 @@ public class AsideController {
     private OrderRepository ordersRepository;
 
     @GetMapping("/product")
-    public String showProductList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+    public String showProductList(Model model) {
         List<Product> products = productRepository.findAll();
 
-        model.addAttribute("products", products);
-        model.addAttribute("page", page);
+//        model.addAttribute("products", products);
+//        model.addAttribute("page", page);
 
         return "productList"; // 상품 목록 페이지로 이동
     }
@@ -43,5 +43,11 @@ public class AsideController {
     public String showStoreManagement(Model model) {
         // 여기에 상품 관리 로직을 추가하세요.
         return "storeManagement"; // 상품 관리 페이지로 이동
+    }
+
+    @GetMapping("/seller")
+    public String showStore(Model model) {
+        // 여기에 상품 관리 로직을 추가하세요.
+        return "store"; // 상품 관리 페이지로 이동
     }
 }

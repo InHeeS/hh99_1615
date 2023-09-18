@@ -30,7 +30,7 @@ public class Product {
 
     // 현재 판매상태 (판매중, 품절, 판매중지)
     @Enumerated(value = EnumType.STRING)
-    private ProductStatus productStatus;
+    private ProductStatus productStatus = ProductStatus.AVAILABLE;
 
     public Product(Store store, ProductRequestDto requestDto) {
         this.store = store;
@@ -43,12 +43,12 @@ public class Product {
     }
 
     // getters and setters
-    public void update(ProductRequestDto requestDto) {
+    public void update(ProductRequestDto requestDto, ProductStatus productStatus) {
         this.productTitle = requestDto.getProductTitle();
         this.info = requestDto.getInfo();
         this.price = requestDto.getPrice();
         this.productImage = requestDto.getProductImage();
         this.productLink = requestDto.getProductLink();
-        this.productStatus = getProductStatus();
+        this.productStatus = productStatus;
     }
 }

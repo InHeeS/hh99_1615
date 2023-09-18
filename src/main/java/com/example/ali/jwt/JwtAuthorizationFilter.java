@@ -35,6 +35,24 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String accessTokenValue = jwtUtil.getTokenFromRequest(req, "Authorization");
         String refreshTokenValue = jwtUtil.getTokenFromRequest(req, "AuthorizationR");
 
+//        if ("/api/auth/login".equals(req.getRequestURI()) ||
+//                "/api/auth/signup".equals(req.getRequestURI()) ||
+//                req.getRequestURI().startsWith("/v3/") ||
+//                req.getRequestURI().startsWith("/swagger-ui")) {
+//            // 토큰이 비어 있을 때 예외 처리를 하지 않도록 조건문 추가
+//            filterChain.doFilter(req, res);
+//            return;
+//        }
+//
+//        if( accessTokenValue == null || accessTokenValue.equals("null")) {
+//            res.setContentType("application/json");
+//            res.setCharacterEncoding("UTF-8");
+//            res.setStatus(403);
+//            RestApiException restApiException = new RestApiException( "토큰값이 없습니다.", 403);
+//            res.getWriter().write(new ObjectMapper().writeValueAsString(restApiException)); // 화면에 json 형태로 뿌려진다.
+//            return;
+//        }
+
         if (!StringUtils.hasText(accessTokenValue)) {
             if (StringUtils.hasText(refreshTokenValue)) {
                 validateRefreshToken(res,refreshTokenValue);

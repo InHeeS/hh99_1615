@@ -10,10 +10,10 @@
     <div th:fragment="header" class="header">
     <div></div>
     <div class="center">
-        <a th:href="@{/home}" href="#">Home</a>
+        <a th:href="@{/}" href="#">Home</a>
     </div>
     <div>
-        <a th:href="@{/login}" href="#" class="login-button">로그인</a>
+        <a th:href="@{api/user/login-page}" href="#" class="login-button">로그인</a>
     </div>
         <div>
             <a th:href="@{/api/user/signup-page}" href="#" class="login-button">회원가입</a>
