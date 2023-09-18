@@ -26,4 +26,9 @@ public class UserController {
     public StringResponseDto signup(@RequestBody @Valid SignupRequestDto requestDto) {
         return userService.signup(requestDto);
     }
+
+    @GetMapping("/login-page")
+    public String loginPage() {
+        return "login";
+    }
 }

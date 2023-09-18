@@ -1,0 +1,48 @@
+### Q1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+POST http://localhost:8080/member
+Content-Type: application/json
+
+{
+"email" : "hanghae99@sparta.com",
+"password" : "1234",
+"address" : "서울시",
+"phoneNumber" : "01012345678",
+"nickname" : "르탄이"
+}
+### Q2. 서점에 책 등록된 책 수량 수정 API
+PUT http://localhost:8080/bookstore/1/book/1
+Content-Type: application/json
+
+{
+"title" : "자바의 정석 3판",
+"author" : "남궁성",
+"price" : 10000,
+"stock" : 100
+}
+
+### Q3. 부산점에 자바의 정석 책 등록 API
+POST http://localhost:8080/bookstore/2/book/1
+
+### A1. 가입한 회원 정보 확인 API
+GET http://localhost:8080/member
+
+### A2. 서울점 등록된 책 정보 확인 API
+GET http://localhost:8080/bookstore/1/book
+
+### A3. 부산점 등록된 책 정보 확인 API
+GET http://localhost:8080/bookstore/2/book

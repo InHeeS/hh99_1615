@@ -2,13 +2,12 @@ package com.example.ali.service;
 
 import com.example.ali.dto.OrderRequestDto;
 import com.example.ali.dto.OrderResponseDto;
-import com.example.ali.entity.Orders;
-import com.example.ali.entity.Product;
-import com.example.ali.entity.ShippingStatus;
-import com.example.ali.entity.User;
+import com.example.ali.entity.*;
 import com.example.ali.repository.OrderRepository;
 import com.example.ali.repository.ProductRepository;
 import java.util.List;
+
+import com.example.ali.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
+    private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
@@ -28,16 +28,24 @@ public class OrderService {
     @Transactional
     public OrderResponseDto createOrder(OrderRequestDto requestDto, User user) {
 
+        //user가 seleler가 아닌 것을 확인
+        if (user.getRole() != UserRoleEnum.USER) {
+            throw new IllegalArgumentException("seller는 물품 구매 불가");
+        }
+
         //requestDto에서 요청한 productId로 product찾기
         Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(() ->
                 new IllegalArgumentException()
         );
         //user의 돈이 product가격보다 큰지 확인
         if (user.getPoint() < product.getPrice()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("돈부족");
         }
+
         //user의 포인트 차감
-        user.changePoint(product.getPrice());
+        User usertmp = userRepository.findById(user.getUserId()).orElseThrow(() ->
+                new IllegalArgumentException("일치하는유저없음"));
+        usertmp.changePoint(product.getPrice());
 
         //Order 생성, DB 저장
         Orders order = new Orders(user, product);
@@ -53,6 +61,11 @@ public class OrderService {
 
     @Transactional
     public OrderResponseDto updateOrderShippingStatus(OrderRequestDto requestDto, User user) {
+
+        //user가 seleler가 아닌 것을 확인
+        if (user.getRole() != UserRoleEnum.SELLER) {
+            throw new IllegalArgumentException("seller만 배송상태 수정 가능");
+        }
 
         Long storeId = user.getUserId();
         Orders order = orderRepository.findByProduct_ProductIdAndUser_UserId(requestDto.getProductId(), storeId);

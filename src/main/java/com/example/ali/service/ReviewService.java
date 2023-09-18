@@ -3,10 +3,7 @@ package com.example.ali.service;
 import com.example.ali.dto.ReviewRequestDto;
 import com.example.ali.dto.ReviewResponseDto;
 import com.example.ali.dto.StringResponseDto;
-import com.example.ali.entity.Orders;
-import com.example.ali.entity.Product;
-import com.example.ali.entity.Review;
-import com.example.ali.entity.User;
+import com.example.ali.entity.*;
 import com.example.ali.repository.OrderRepository;
 import com.example.ali.repository.ProductRepository;
 import com.example.ali.repository.ReviewRepository;
@@ -15,13 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private ReviewRepository reviewRepository;
-    private ProductRepository productRepository;
-    private OrderRepository orderRepository;
+    private final ReviewRepository reviewRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     public ReviewResponseDto getReview(Long id) {
         Review review = findReviewById(id);
@@ -32,12 +31,24 @@ public class ReviewService {
         Product product = productRepository.findById(requestDto.getProductId()).orElseThrow(()->
                 new IllegalArgumentException("error")
         );
+
         Orders order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(()->
                 new IllegalArgumentException("error")
         );
-        Review review = new Review(requestDto, user, product, order);
+        if (order.getShippingStatus() != ShippingStatus.DELIVERED) {
+            throw new IllegalArgumentException("배송완료된 제품만 리뷰 가능");
+        }
+        Optional<Review> review = reviewRepository
+                .findByUser_UserIdAndProduct_ProductId(user.getUserId(), requestDto.getProductId());
 
-        return new ReviewResponseDto(review);
+        if (review.isPresent()) {
+            throw new IllegalArgumentException("리뷰 중복됨");
+        }
+
+        Review newReview = new Review(requestDto, user, product, order);
+        reviewRepository.save(newReview);
+
+        return new ReviewResponseDto(newReview);
     }
 
     // 리뷰 업데이트

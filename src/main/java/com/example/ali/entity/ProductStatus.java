@@ -1,8 +1,10 @@
 package com.example.ali.entity;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum ProductStatus {
     // 판매중
     AVAILABLE,
@@ -11,6 +13,4 @@ public enum ProductStatus {
     // 품절
     DISCONTINUED;
 
-    ProductStatus() {
-    }
 }

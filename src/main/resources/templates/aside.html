@@ -19,8 +19,12 @@
     </div>
 
     <!-- Product Management (Visible only to 'seller' role) -->
-<div class="section">  <!--    th:if="${userRole} == 'seller'-->
+    <div class="section">  <!--    th:if="${userRole} == 'seller'-->
         <h2><a th:href="@{/store}" href="#">상품 관리</a></h2>
+    </div>
+
+    <div class="section">  <!--    th:if="${userRole} == 'seller'-->
+        <h2><a th:href="@{/seller}" href="#">매장 관리</a></h2>
     </div>
 </div>
 </div>
