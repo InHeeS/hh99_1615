@@ -46,8 +46,8 @@ public class ProductService {
         Store store = findStore(requestDto.getStoreId());
 
         Product product = new Product(store, requestDto);
-        productRepository.save(product);
-        return new ProductResponseDto(product);
+        Product saveProduct = productRepository.save(product);
+        return new ProductResponseDto(saveProduct);
     }
 
     // 상품 정보 수정

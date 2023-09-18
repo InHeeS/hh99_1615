@@ -14,6 +14,7 @@ public class ProductResponseDto {
     private String sellerName;
     private String info;
     private Double price;
+    private Long quantity;
     private String productImage;
     private String productLink;
     private ProductStatus productStatus;
@@ -26,6 +27,7 @@ public class ProductResponseDto {
         this.sellerName = product.getStore().getSellerName();
         this.info = product.getInfo();
         this.price = product.getPrice();
+        this.quantity = product.getStock();
         this.productImage = product.getProductImage();
         this.productLink = product.getProductLink();
         this.productStatus = product.getProductStatus();

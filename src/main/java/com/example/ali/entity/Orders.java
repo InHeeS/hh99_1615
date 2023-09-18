@@ -38,6 +38,10 @@ public class Orders extends Timestamped{
         this.shippingStatus = ShippingStatus.DELIVERING;
     }
 
+    public void changeStatus() {
+        this.shippingStatus = ShippingStatus.DELIVERED;
+    }
+
 
     // getters and setters
 }

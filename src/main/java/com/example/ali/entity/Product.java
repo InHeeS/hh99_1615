@@ -24,6 +24,9 @@ public class Product {
 
     private Double price;
 
+    @Version
+    private Long stock;
+
     private String productImage;
 
     private String productLink;
@@ -37,6 +40,7 @@ public class Product {
         this.productTitle = requestDto.getProductTitle();
         this.info = requestDto.getInfo();
         this.price = requestDto.getPrice();
+        this.stock = requestDto.getStock();
         this.productImage = requestDto.getProductImage();
         this.productLink = requestDto.getProductLink();
         this.productStatus = getProductStatus();
