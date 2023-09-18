@@ -68,6 +68,7 @@ public class WebSecurityConfig {
                                 /* swagger v3 */
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
+                                "/api/test/**",
                                 "/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
                         .anyRequest().authenticated()
 
