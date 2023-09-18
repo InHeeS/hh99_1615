@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Page</title>
+</head>
+<body>
+<h1>Signup</h1>
+<form id="signupForm" onsubmit="signup(event)">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required><br>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required><br>
+
+  <label for="seller">Seller:</label>
+  <input type="checkbox" id="seller" name="seller"><br>
+
+  <button type="submit">Sign Up</button>
+</form>
+
+<script>
+  function signup(event) {
+    event.preventDefault();
+
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var email = document.getElementById("email").value;
+    var isSeller = document.getElementById("seller").checked;
+
+    var data = {
+      username: username,
+      password: password,
+      email: email,
+      seller: isSeller
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api/user/signup");
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        alert("Signup successful");
+      } else {
+        alert("Signup failed");
+      }
+    };
+    xhr.send(JSON.stringify(data));
+  }
+</script>
+</body>
+</html>

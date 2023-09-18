@@ -56,19 +56,20 @@ public class WebSecurityConfig {
 
         // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
         http.sessionManagement((sessionManagement) ->
-            sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
 
         http.authorizeHttpRequests((authorizeHttpRequests) ->
-                                              authorizeHttpRequests
-                                                  .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 패키지 접근 허용 설정
-                                                  .requestMatchers(
-                                                      "/api/auth/**",
-                                                      /* swagger v3 */
-                                                      "/v3/api-docs/**",
-                                                      "/swagger-ui/**",
-                                                        "/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
-                                                  .anyRequest().authenticated()
+                authorizeHttpRequests
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 패키지 접근 허용 설정
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/api/user/**",
+                                /* swagger v3 */
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
+                        .anyRequest().authenticated()
 
         );
 //        http.exceptionHandling(a-> a.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))); //예외처리
