@@ -1,6 +1,7 @@
 package com.example.ali.jwt;
 
 import com.example.ali.entity.UserRoleEnum;
+import com.example.ali.exception.RestApiException;
 import com.example.ali.security.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
