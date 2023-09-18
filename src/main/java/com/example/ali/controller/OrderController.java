@@ -19,24 +19,25 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/user/orders")
-    public List<OrderResponseDto> getAllOrder() {
-        return orderService.getAllOrder();
+    public List<OrderResponseDto> getAllOrder(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return orderService.getAllOrder(userDetails.getUser());
     }
+
     @PostMapping("/user/orders")
     public OrderResponseDto createOrder(@RequestBody OrderRequestDto requestDto,
-                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return orderService.createOrder(requestDto, userDetails.getUser());
     }
 
     @GetMapping("/seller/orders")
-    public List<OrderResponseDto> getAllSellerOrder( @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public List<OrderResponseDto> getAllSellerOrder(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return orderService.getAllSellerOrder(userDetails.getUser());
     }
 
-    @PutMapping("/seller/orders")
-    public OrderResponseDto updateOrderShippingStatus(@RequestBody OrderRequestDto requestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return orderService.updateOrderShippingStatus(requestDto,userDetails.getUser());
+    @PutMapping("/seller/orders/{orderId}")
+    public OrderResponseDto updateOrderShippingStatus(@PathVariable Long orderId,
+                                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return orderService.updateOrderShippingStatus(orderId, userDetails.getUser());
     }
 
 }

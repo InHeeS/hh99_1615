@@ -8,6 +8,7 @@ public class ProductRequestDto {
     private String productTitle;
     private String info;
     private Double price;
+    private Long stock;
     private String productImage;
     private String productLink;
     private String productStatus;
