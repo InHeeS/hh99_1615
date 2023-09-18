@@ -1,29 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>WebSocket Notification</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Index Page</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<script>
-  var socket = new SockJS('/ws');
-  var stompClient = Stomp.over(socket);
+<!-- Header Section -->
+<div th:replace="header :: header"></div>
 
-  stompClient.connect({}, function (frame) {
-    console.log('Connected: ' + frame);
+<div style="display: flex;">
+  <!-- Aside Section -->
+  <div th:replace="aside :: aside"></div>
 
-    stompClient.subscribe('/topic/notification', function (notification) {
-      alert(notification.body);
-    });
-  });
-
-  function sendNotification() {
-    stompClient.send("/api/deliveryStatus", {}, "Delivery Completed!");
-  }
-</script>
-
-<button onclick="sendNotification()">Send Notification</button>
-
+  <!-- Main Content Section -->
+  <div style="flex-grow: 1; padding: 20px;" th:replace="productList :: product-list">
+    <!-- ... (other content) -->
+  </div>
+</div>
 </body>
 </html>

@@ -23,15 +23,15 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
 
-    // 전체 조회
-    @Transactional(readOnly = true)
-    public Page<ProductResponseDto> getProducts(int page, int size, String sortBy, boolean isAsc) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Product> productList = productRepository.findAll(pageable);
-        return productList.map(ProductResponseDto::new);
-    }
+//    // 전체 조회  TODO : TEST용으로 임시 주석처리
+//    @Transactional(readOnly = true)
+//    public Page<ProductResponseDto> getProducts(int page, int size, String sortBy, boolean isAsc) {
+//        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+//        Sort sort = Sort.by(direction, sortBy);
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//        Page<Product> productList = productRepository.findAll(pageable);
+//        return productList.map(ProductResponseDto::new);
+//    }
 
     // 게시물 id로 조회
     public ProductResponseDto getProduct(Long productId) {
@@ -82,4 +82,9 @@ public class ProductService {
         );
     }
 
+    // TODO : 테스트용
+    @Transactional(readOnly = true)
+    public List<ProductResponseDto> getProducts() {
+        return productRepository.findAll().stream().map(ProductResponseDto::new).toList();
+    }
 }

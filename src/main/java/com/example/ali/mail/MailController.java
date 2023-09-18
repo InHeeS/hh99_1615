@@ -12,10 +12,10 @@ public class MailController {
 
     private final MailService mailService;
 
-    @GetMapping("/")
-    public String MailPage(){
-        return "Main";
-    }
+//    @GetMapping("/")
+//    public String MailPage(){
+//        return "Main";
+//    }
 
     @ResponseBody
     @PostMapping("/mail")

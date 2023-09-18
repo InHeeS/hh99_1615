@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Store Management</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<!-- Header Section -->
+<div th:replace="header :: header"></div>
+
+<!-- Aside Section -->
+<div th:replace="aside :: aside"></div>
+
+<!-- Store Management Content -->
+<div class="store-management-content">
+  <h1>Store Management</h1>
+
+  <!-- Add Product Button -->
+  <button type="button" onclick="openAddProductModal()">Add Product</button>
+
+  <!-- Product List -->
+  <div id="productList">
+    <table>
+      <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Title</th>
+        <th>Info</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Link</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="product : ${products}">
+        <td th:text="${product.productId}">Product ID</td>
+        <td th:text="${product.productTitle}">Product Title</td>
+        <td th:text="${product.info}">Info</td>
+        <td th:text="${product.price}">Price</td>
+        <td><img th:src="${product.productImage}" alt="Product Image" width="50" height="50"/></td>
+        <td><a th:href="${product.productLink}" target="_blank">Link</a></td>
+        <td th:text="${product.productStatus}">Status</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Product Add/Edit Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="modalTitle">Add/Edit Product</h2>
+      <form id="productForm">
+        <div>
+          <label for="productTitle">Product Title:</label>
+          <input type="text" id="productTitle" name="productTitle">
+        </div>
+
+        <div>
+          <label for="info">Info:</label>
+          <textarea id="info" name="info"></textarea>
+        </div>
+
+        <div>
+          <label for="price">Price:</label>
+          <input type="text" id="price" name="price">
+        </div>
+
+        <div>
+          <label for="productImage">Product Image URL:</label>
+          <input type="text" id="productImage" name="productImage">
+        </div>
+
+        <div>
+          <label for="productLink">Product Link:</label>
+          <input type="text" id="productLink" name="productLink">
+        </div>
+
+        <div>
+          <label for="productStatus">Product Status:</label>
+          <select id="productStatus" name="productStatus">
+            <option value="available">Available</option>
+            <option value="out_of_stock">Out of Stock</option>
+            <option value="discontinued">Discontinued</option>
+          </select>
+        </div>
+
+        <div class="modal-btn-set">
+          <button type="button" id="addButton" onclick="addProduct()">Add Product</button>
+          <button type="button" id="updateButton" onclick="updateProduct()">Update Product</button>
+          <button type="button" id="deleteButton" onclick="deleteProduct()">Delete Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  var selectedProductId = null;
+
+  function openAddProductModal() {
+    selectedProductId = null;
+    document.getElementById('modalTitle').innerText = 'Add Product';
+    document.getElementById('addButton').style.display = 'block';
+    document.getElementById('updateButton').style.display = 'none';
+    document.getElementById('deleteButton').style.display = 'none';
+    document.getElementById('productModal').style.display = 'block';
+  }
+
+  function openEditProductModal(productId) {
+    selectedProductId = productId;
+    document.getElementById('modalTitle').innerText = 'Edit Product';
+    document.getElementById('addButton').style.display = 'none';
+    document.getElementById('updateButton').style.display = 'block';
+    document.getElementById('deleteButton').style.display = 'block';
+    document.getElementById('productModal').style.display = 'block';
+    // 여기에 코드를 추가하여 선택한 상품의 데이터를 모달에 채워주세요.
+  }
+
+  function closeModal() {
+    document.getElementById('productModal').style.display = 'none';
+  }
+
+  function addProduct() {
+    var productData = {
+      productTitle: $('#productTitle').val(),
+      info: $('#info').val(),
+      price: $('#price').val(),
+      productImage: $('#productImage').val(),
+      productLink: $('#productLink').val(),
+      productStatus: $('#productStatus').val()
+    };
+    $.ajax({
+      url: '/stores/products',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(productData),
+      success: function(response) {
+        alert('Product added successfully');
+        // 여기에 성공 로직을 추가하세요 (예: 상품 목록 새로 고침).
+      },
+      error: function(error) {
+        alert('Failed to add product');
+        // 여기에 오류 처리 로직을 추가하세요.
+      }
+    });
+  }
+
+  function updateProduct() {
+    var productId = selectedProductId;
+    var productData = {
+      productTitle: $('#productTitle').val(),
+      info: $('#info').val(),
+      price: $('#price').val(),
+      productImage: $('#productImage').val(),
+      productLink: $('#productLink').val(),
+      productStatus: $('#productStatus').val()
+    };
+    $.ajax({
+      url: '/stores/products/' + productId,
+      type: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(productData),
+      success: function(response) {
+        alert('Product updated successfully');
+        // 여기에 성공 로직을 추가하세요.
+      },
+      error: function(error) {
+        alert('Failed to update product');
+        // 여기에 오류 처리 로직을 추가하세요.
+      }
+    });
+  }
+
+  function deleteProduct() {
+    var productId = selectedProductId;
+    $.ajax({
+      url: '/stores/products/' + productId,
+      type: 'DELETE',
+      success: function(response) {
+        alert('Product deleted successfully');
+        // 여기에 성공 로직을 추가하세요.
+      },
+      error: function(error) {
+        alert('Failed to delete product');
+        // 여기에 오류 처리 로직을 추가하세요.
+      }
+    });
+  }
+
+  function loadProductList() {
+    $.ajax({
+      url: '/api/products', // TODO : 해당 스토어 정보만 보이게 수정 필요
+      type: 'GET',
+      success: function(response) {
+        var productList = $('#productList tbody');
+        productList.empty(); // 기존의 목록을 비웁니다.
+        response.forEach(function(product) {
+          var productRow = '<tr onclick="openEditProductModal(' + product.productId + ')">' +
+                  '<td>' + product.productId + '</td>' +
+                  '<td>' + product.productTitle + '</td>' +
+                  '<td>' + product.info + '</td>' +
+                  '<td>' + product.price + '</td>' +
+                  '<td><img src="' + product.productImage + '" alt="Product Image" width="100"></td>' +
+                  '<td><a href="' + product.productLink + '" target="_blank">Link</a></td>' +
+                  '<td>' + product.productStatus + '</td>' +
+                  '</tr>';
+          productList.append(productRow);
+        });
+      },
+      error: function(error) {
+        alert('Failed to load product list');
+      }
+    });
+  }
+
+  // 페이지가 로드될 때 상품 목록을 불러옵니다.
+  $(document).ready(function() {
+    loadProductList();
+  });
+</script>
+</html>

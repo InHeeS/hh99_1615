@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf Header</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="header">
+    <div th:fragment="header" class="header">
+    <div></div>
+    <div class="center">
+        <a th:href="@{/home}" href="#">Home</a>
+    </div>
+    <div>
+        <a th:href="@{/login}" href="#" class="login-button">로그인</a>
+    </div>
+</div>
+</div>
+</body>
+</html>
