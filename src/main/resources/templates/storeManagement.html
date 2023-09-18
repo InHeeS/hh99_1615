@@ -194,7 +194,7 @@
 
   function loadProductList() {
     $.ajax({
-      url: '{sdfkasf}/api/products', // TODO : 해당 스토어 정보만 보이게 수정 필요
+      url: '/api/products', // TODO : 해당 스토어 정보만 보이게 수정 필요
       type: 'GET',
       success: function(response) {
         var productList = $('#productList tbody');
