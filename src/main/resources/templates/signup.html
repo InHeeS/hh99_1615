@@ -14,16 +14,29 @@
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" required><br>
 
+  <div id="mail_input" name="mail_input">
+    <input type="text" name="mail" id="mail" placeholder="이메일 입력">
+    <button type="button" id="sendBtn" name="sendBtn" onclick="sendNumber()">인증번호</button>
+  </div>
+  <br>
+  <div id="mail_number" name="mail_number" style="display: none">
+    <input type="text" name="number" id="number" placeholder="인증번호 입력">
+    <button type="button" name="confirmBtn" id="confirmBtn" onclick="confirmNumber()">이메일 인증</button>
+  </div>
+  <br>
+  <input type="text" id="Confirm" name="Confirm" style="display: none" value="">
+
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" required><br>
 
   <label for="seller">Seller:</label>
   <input type="checkbox" id="seller" name="seller"><br>
 
-  <button type="submit">Sign Up</button>
+  <button type="submit" disabled>Sign Up</button>
 </form>
 
-<script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
   function signup(event) {
     event.preventDefault();
 
@@ -50,6 +63,41 @@
       }
     };
     xhr.send(JSON.stringify(data));
+  }
+
+  function sendNumber() {
+    $("#mail_number").css("display", "block");
+    $.ajax({
+      url: "/mail",
+      type: "post",
+      dataType: "json",
+      data: { "mail": $("#mail").val() },
+      success: function (data) {
+        alert("인증번호 발송");
+        $("#Confirm").attr("value", data);
+      }
+    });
+  }
+
+  function confirmNumber() {
+    var number1 = $("#number").val();
+    var number2 = $("#Confirm").val();
+
+    if (number1 == number2) {
+      alert("인증되었습니다.");
+
+      // Fill the email field with the verified email
+      var verifiedEmail = $("#mail").val();
+      $("#email").val(verifiedEmail);
+
+      // Disable the email field
+      $("#email").prop("disabled", true);
+
+      // Enable the submit button for signup
+      $("#signupForm button[type='submit']").prop("disabled", false);
+    } else {
+      alert("번호가 다릅니다.");
+    }
   }
 </script>
 </body>
