@@ -31,7 +31,7 @@ public class OrderController {
 
     @GetMapping("/seller/orders")
     public List<OrderResponseDto> getAllSellerOrder(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return orderService.getAllSellerOrder(userDetails.getUser());
+        return orderService.getAllOrder(userDetails.getUser());
     }
 
     @PutMapping("/seller/orders/{orderId}")
