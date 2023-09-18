@@ -63,9 +63,8 @@ public class StoreController {
     // 상품 정보 삭제
     @DeleteMapping("/stores/products/{productId}")
     public ProductResponseDto deleteProduct(
-            @PathVariable Long productId,
-            @RequestBody ProductRequestDto requestDto) {
-        return productService.deleteProduct(productId, requestDto);
+            @PathVariable Long productId) {
+        return productService.deleteProduct(productId);
     }
 
 

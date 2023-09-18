@@ -9,7 +9,9 @@ import lombok.Getter;
 public class ProductResponseDto {
     private Long productId;
     private String productTitle;
-    private Store store;
+    private Long storeId;
+    private String storeName;
+    private String sellerName;
     private String info;
     private Double price;
     private String productImage;
@@ -19,7 +21,9 @@ public class ProductResponseDto {
     public ProductResponseDto(Product product) {
         this.productId = product.getProductId();
         this.productTitle = product.getProductTitle();
-        this.store = product.getStore();
+        this.storeName = product.getStore().getStoreName();
+        this.storeId = product.getStore().getStoreId();
+        this.sellerName = product.getStore().getSellerName();
         this.info = product.getInfo();
         this.price = product.getPrice();
         this.productImage = product.getProductImage();
